@@ -9,14 +9,18 @@ const signOptions = { expiresIn: '8h', algorithm: 'RS256' }
 const createToken = (payload) => jwt.sign(payload, privateKey, signOptions)
 const decodeToken = (token) => {
   const [, JWT] = token.split(' ')
-  const validToken = jwt.verify(JWT, publicKey, function (err, decoded) {
+  const validToken = checkToken(JWT, publicKey)
+  return validToken
+}
+
+function checkToken (JWT, publicKey) {
+  return jwt.verify(JWT, publicKey, function (err, decoded) {
     if (err) {
       throw new JsonWebTokenError()
     }
+    console.log(decoded)
     return decoded
   })
-  console.log(validToken)
-  return validToken
 }
 
 module.exports = { createToken, decodeToken }

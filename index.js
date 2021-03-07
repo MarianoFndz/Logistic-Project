@@ -1,8 +1,11 @@
 const express = require('express')
+const dotenv = require('dotenv')
 const logger = require('morgan')
 const compression = require('compression')
 const databaseConnection = require('./database/config')
 const { securedUser } = require('./middlewares/auth')
+
+dotenv.config()
 
 databaseConnection()
 

@@ -22,6 +22,14 @@ const UserSchema = Schema({
     ref: 'WorkPosition',
     required: true
   },
+  verificationCode: {
+    type: String,
+    required: true
+  },
+  dateExpirationCode: {
+    type: Date,
+    required: true
+  },
   tsCreate: {
     type: Date,
     default: Date.now

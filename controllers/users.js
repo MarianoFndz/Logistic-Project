@@ -1,6 +1,12 @@
-const Users = require('../models/User')
+
+const uid = require('node-uuid')
+const moment = require('moment')
+const registerTemplate = require('../utils/registerTemplate')
+
+const User = require('../models/User')
 const { hash, unhash } = require('../utils/bcrypt')
 const { createToken } = require('../services/auth')
+const sendEmail = require('../services/mailing')
 
 const {
   EmailExistsError,
@@ -9,28 +15,26 @@ const {
 } = require('../customErrors/customErrors')
 
 const all = async (req, res) => {
-  const allUsers = await Users.find()
+  const allUsers = await User.find()
 
   res.json(allUsers)
 }
 
 const create = async ({ body: data }, res, next) => {
   try {
-    const { email, password, firstName, lastName, workPosition } = data
+    const { email } = data
+
+    console.log(data)
 
     const userExists = await checkEmail(email)
 
     if (userExists) return next(new EmailExistsError())
 
-    const passwordHashed = hash(password)
+    const newUserData = await saveUser(data)
 
-    Users.create({
-      email,
-      password: passwordHashed,
-      firstName,
-      lastName,
-      workPosition
-    })
+    console.log(newUserData)
+
+    sendVerificationEmail(newUserData)
 
     res.status(201).json({ message: 'User created' })
   } catch (error) {
@@ -61,14 +65,39 @@ const login = async ({ body: data }, res, next) => {
   }
 }
 
-const checkEmail = (email) => {
-  return Users.findOne({ email }, { password: 1 })
+function checkEmail (email) {
+  return User.findOne({ email }, { password: 1 })
 }
 
-const checkPassword = (password, passwordHashed) => {
+function checkPassword (password, passwordHashed) {
   const isPasswordValid = unhash(password, passwordHashed)
 
   if (!isPasswordValid) throw new LoginError()
+}
+
+function saveUser (data) {
+  const { password } = data
+
+  const passwordHashed = hash(password)
+
+  const newUser = new User({
+    ...data,
+    password: passwordHashed,
+    verificationCode: uid(),
+    dateExpirationCode: moment(new Date()).add(1, 'hours')
+  })
+
+  return newUser.save()
+}
+
+function sendVerificationEmail (data) {
+  const { firstName, lastName, verificationCode, email } = data
+
+  sendEmail({
+    to: email,
+    subject: 'Gracias por registrarte en mi aplicacion hermosa 🥰',
+    html: registerTemplate({ firstName, lastName, verificationCode })
+  })
 }
 
 module.exports = {

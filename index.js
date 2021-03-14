@@ -16,8 +16,12 @@ app.use(logger('dev'))
 
 const workPosition = require('./routes/workPosition')
 const auth = require('./routes/auth')
+const client = require('./routes/client')
+const order = require('./routes/order/order')
 
+app.use('/client', securedUser, client)
 app.use('/workPosition', securedUser, workPosition)
+app.use('/order', securedUser, order)
 app.use('/auth', auth)
 
 app.get('/', (req, res) => {

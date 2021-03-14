@@ -8,9 +8,13 @@ const signOptions = { expiresIn: '8h', algorithm: 'RS256' }
 
 const createToken = (payload) => jwt.sign(payload, privateKey, signOptions)
 const decodeToken = (token) => {
-  const [, JWT] = token.split(' ')
-  const validToken = checkToken(JWT, publicKey)
-  return validToken
+  try {
+    const [, JWT] = token.split(' ')
+    const validToken = checkToken(JWT, publicKey)
+    return validToken
+  } catch (e) {
+    throw new Error('Invalid token')
+  }
 }
 
 function checkToken (JWT, publicKey) {

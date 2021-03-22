@@ -1,11 +1,11 @@
-const Client = require('../../models/Client')
+const Client = require('../models/ClientModel')
 
-const all = async (req, res) => {
+const allController = async (req, res) => {
   const allClients = await Client.find()
   res.json(allClients)
 }
 
-const create = ({ body: data }, res) => {
+const createController = ({ body: data }, res) => {
   const newClient = new Client(data)
 
   Client
@@ -16,6 +16,6 @@ const create = ({ body: data }, res) => {
 }
 
 module.exports = {
-  all,
-  create
+  allController,
+  createController
 }

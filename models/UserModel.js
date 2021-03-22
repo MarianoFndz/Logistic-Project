@@ -34,6 +34,10 @@ const UserSchema = Schema({
     type: Date,
     default: Date.now
   },
+  admin: {
+    type: Boolean,
+    default: false
+  },
   enable: {
     type: Boolean,
     default: false

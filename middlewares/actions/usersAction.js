@@ -1,4 +1,4 @@
-const schema = require('../schema/users')
+const schema = require('../schema/usersSchema')
 
 const validateCreate = (req, res, next) => {
   const { error } = schema.create.validate(req.body)

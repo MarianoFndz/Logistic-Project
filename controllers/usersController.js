@@ -3,7 +3,7 @@ const uid = require('node-uuid')
 const moment = require('moment')
 const registerTemplate = require('../utils/registerTemplate')
 
-const User = require('../models/User')
+const User = require('../models/UserModel')
 const { hash, unhash } = require('../utils/bcrypt')
 const { createToken } = require('../services/auth')
 const sendEmail = require('../services/mailing')
@@ -14,13 +14,13 @@ const {
   LoginError
 } = require('../customErrors/customErrors')
 
-const all = async (req, res) => {
+const allController = async (req, res) => {
   const allUsers = await User.find()
 
   res.json(allUsers)
 }
 
-const create = async ({ body: data }, res, next) => {
+const createController = async ({ body: data }, res, next) => {
   try {
     const { email } = data
 
@@ -42,7 +42,7 @@ const create = async ({ body: data }, res, next) => {
   }
 }
 
-const login = async ({ body: data }, res, next) => {
+const loginController = async ({ body: data }, res, next) => {
   try {
     const { password, email } = data
     const userExists = await checkEmail(email)
@@ -51,9 +51,12 @@ const login = async ({ body: data }, res, next) => {
 
     checkPassword(password, userExists.password)
 
+    console.log(userExists)
+
     const JWTObject = {
       _id: userExists._id,
-      email
+      email,
+      admin: userExists.admin
     }
 
     const JWT = createToken(JWTObject)
@@ -66,7 +69,7 @@ const login = async ({ body: data }, res, next) => {
 }
 
 function checkEmail (email) {
-  return User.findOne({ email }, { password: 1 })
+  return User.findOne({ email }, { password: 1, admin: 1 })
 }
 
 function checkPassword (password, passwordHashed) {
@@ -101,7 +104,7 @@ function sendVerificationEmail (data) {
 }
 
 module.exports = {
-  all,
-  create,
-  login
+  allController,
+  createController,
+  loginController
 }

@@ -1,11 +1,11 @@
-const Order = require('../models/Order')
+const Order = require('../../models/OrderModel')
 
-const all = async (req, res) => {
+const allController = async (req, res) => {
   const allOrders = await Order.find()
   res.json(allOrders)
 }
 
-const create = ({ body: data, id }, res) => {
+const createController = ({ body: data, id }, res) => {
   const newOrder = new Order({
     user: id,
     ...data
@@ -19,6 +19,6 @@ const create = ({ body: data, id }, res) => {
 }
 
 module.exports = {
-  all,
-  create
+  allController,
+  createController
 }

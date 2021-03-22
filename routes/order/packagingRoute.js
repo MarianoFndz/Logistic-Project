@@ -1,8 +1,8 @@
 const { Router } = require('express')
 const router = Router()
 
-const controller = require('../../controllers/packaging')
-// const validates = require('../../middlewares/actions/order')
+const controller = require('../../controllers/order/packagingController')
+
 const { startController, finishController } = controller
 
 router.post('/start/:orderId', startController)

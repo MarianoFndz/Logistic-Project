@@ -39,6 +39,11 @@ const WorkPositionSchema = Schema({
     type: String,
     required: true
   },
+  permissions: {
+    type: Map,
+    of: Boolean,
+    required: true
+  },
   tsCreate: {
     type: Date,
     default: Date.now

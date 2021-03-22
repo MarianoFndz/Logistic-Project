@@ -1,4 +1,4 @@
-const Order = require('../../models/Order')
+const Order = require('../../models/OrderModel')
 const { validateStart, validateFinish } = require('../../utils/process')
 
 async function startProcess (orderId, userId, processName) {
@@ -10,8 +10,7 @@ async function startProcess (orderId, userId, processName) {
     {
       $set: {
         'process.$.startDate': new Date(),
-        'process.$.user': userId,
-        finished: processName === 'Transporting'
+        'process.$.user': userId
       }
     }
   )

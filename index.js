@@ -3,7 +3,7 @@ const dotenv = require('dotenv')
 const logger = require('morgan')
 const compression = require('compression')
 const databaseConnection = require('./database/config')
-const { securedUser } = require('./middlewares/auth')
+const { securedUser, securedAdmin } = require('./middlewares/authMiddleware')
 
 dotenv.config()
 
@@ -14,13 +14,13 @@ app.use(compression())
 app.use(express.json())
 app.use(logger('dev'))
 
-const workPosition = require('./routes/workPosition')
-const auth = require('./routes/auth')
-const client = require('./routes/client')
-const order = require('./routes/order/order')
+const workPosition = require('./routes/workPositionRoute')
+const auth = require('./routes/authRoute')
+const client = require('./routes/clientRoute')
+const order = require('./routes/order/orderRoute')
 
 app.use('/client', securedUser, client)
-app.use('/workPosition', securedUser, workPosition)
+app.use('/work-position', securedAdmin, workPosition)
 app.use('/order', securedUser, order)
 app.use('/auth', auth)
 

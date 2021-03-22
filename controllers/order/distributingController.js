@@ -1,4 +1,4 @@
-const { startProcess, finishProcess } = require('../services/orderProcess/processStatus')
+const { startProcess, finishProcess } = require('../../services/orderProcess/processStatus')
 
 const PROCESS_NAME = 'Distributing'
 

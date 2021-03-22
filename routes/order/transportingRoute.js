@@ -1,7 +1,7 @@
 const { Router } = require('express')
 const router = Router()
 
-const controller = require('../../controllers/transporting')
+const controller = require('../../controllers/order/transportingController')
 // const validates = require('../../middlewares/actions/order')
 const { startController, finishController } = controller
 

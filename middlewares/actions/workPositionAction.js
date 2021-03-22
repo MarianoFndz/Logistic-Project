@@ -1,12 +1,12 @@
-const schema = require('../schema/order')
+const schema = require('../schema/workPositionSchema')
 
-const create = (req, res, next) => {
+const validateCreate = (req, res, next) => {
   const { error } = schema.create.validate(req.body)
   error ? res.status(422).json({ message: error.details[0].message }) : next()
 }
 
 const validates = {
-  create
+  validateCreate
 }
 
 module.exports = validates

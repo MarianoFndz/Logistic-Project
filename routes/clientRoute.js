@@ -1,10 +1,10 @@
 const { Router } = require('express')
 const router = Router()
-const { allController, createController } = require('../controllers/clientController')
-const { createValidate } = require('../middlewares/actions/clientAction')
-const { permissionsCreateMiddleware } = require('../middlewares/permissions/permissionsClientMiddleware')
+const controllers = require('../controllers/clientController')
+const validates = require('../middlewares/actions/clientAction')
+const permissions = require('../middlewares/permissions/permissionsClientMiddleware')
 
-router.get('/', allController)
-router.post('/', permissionsCreateMiddleware, createValidate, createController)
+router.get('/', permissions.all, controllers.all)
+router.post('/', permissions.create, validates.create, controllers.all)
 
 module.exports = router

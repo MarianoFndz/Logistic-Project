@@ -19,20 +19,20 @@ const auth = require('./routes/authRoute')
 const client = require('./routes/clientRoute')
 const order = require('./routes/order/orderRoute')
 
-app.use('/client', securedUser, client)
-app.use('/work-position', securedAdmin, workPosition)
-app.use('/order', securedUser, order)
-app.use('/auth', auth)
+// app.use('/client', securedUser, client)
+// app.use('/work-position', securedAdmin, workPosition)
+// app.use('/order', securedUser, order)
+// app.use('/auth', auth)
 
-app.get('/', (req, res) => {
-  res.send('<h1>Hello world!!!❤👋</h1>')
-  res.end()
-})
+// app.get('/', (req, res) => {
+// 	res.send('<h1>Hello world!!!❤👋</h1>')
+// 	res.end()
+// })
 
 app.use((err, req, res, __) => {
-  err.status = err.status ? err.status : 500
+	err.status = err.status ? err.status : 500
 
-  res.status(err.status).json({ message: err.message })
+	res.status(err.status).json({ message: err.message })
 })
 
 app.listen(5000)

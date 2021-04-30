@@ -1,11 +1,10 @@
 const express = require('express')
 const dotenv = require('dotenv')
+dotenv.config()
 const logger = require('morgan')
 const compression = require('compression')
 const databaseConnection = require('./database/config')
 const { securedUser, securedAdmin } = require('./middlewares/authMiddleware')
-
-dotenv.config()
 
 databaseConnection()
 
@@ -19,20 +18,22 @@ const auth = require('./routes/authRoute')
 const client = require('./routes/clientRoute')
 const order = require('./routes/order/orderRoute')
 
-// app.use('/client', securedUser, client)
-// app.use('/work-position', securedAdmin, workPosition)
-// app.use('/order', securedUser, order)
-// app.use('/auth', auth)
+app.use('/client', securedUser, client)
+app.use('/work-position', securedAdmin, workPosition)
+app.use('/order', securedUser, order)
+app.use('/auth', auth)
 
-// app.get('/', (req, res) => {
-// 	res.send('<h1>Hello world!!!❤👋</h1>')
-// 	res.end()
-// })
-
-app.use((err, req, res, __) => {
-	err.status = err.status ? err.status : 500
-
-	res.status(err.status).json({ message: err.message })
+app.get('/', (req, res) => {
+  res.send('<h1>Hello world!!!❤👋</h1>')
+  res.end()
 })
 
-app.listen(5000)
+app.use((err, req, res, __) => {
+  err.status = err.status ? err.status : 500
+
+  res.status(err.status).json({ message: err.message })
+})
+
+const server = app.listen(5000)
+
+module.exports = { app, server }

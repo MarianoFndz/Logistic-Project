@@ -1,13 +1,13 @@
 const { Router } = require('express')
 const router = Router()
-const controller = require('../controllers/usersController')
+const controller = require('../controllers/authController')
 const validates = require('../middlewares/actions/usersAction')
-const { securedAdmin } = require('../middlewares/authMiddleware')
+const { securedUser } = require('../middlewares/authMiddleware')
 
-router.post('/', securedAdmin, validates.create, controller.create)
+router.post('/', securedUser, validates.create, controller.create)
 
-router.get('/', securedAdmin, controller.all)
+router.get('/', securedUser, controller.all)
 
-router.post('/login', validates.create, controller.login)
+router.post('/login', validates.auth, controller.login)
 
 module.exports = router

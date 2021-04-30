@@ -17,18 +17,17 @@ const UserSchema = Schema({
     type: String,
     required: true
   },
-  workPosition: {
+  jobTitle: {
     type: Schema.Types.ObjectId,
-    ref: 'WorkPosition',
-    required: true
+    ref: 'JobTitle'
   },
   verificationCode: {
-    type: String,
-    required: true
+    type: String
+    // required: true
   },
   dateExpirationCode: {
-    type: Date,
-    required: true
+    type: Date
+    // required: true
   },
   tsCreate: {
     type: Date,

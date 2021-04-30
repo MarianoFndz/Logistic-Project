@@ -1,13 +1,12 @@
 const { decodeToken } = require('../services/auth')
+const { Unauthorized, JsonWebTokenError } = require('../customErrors')
 
 const securedUser = (req, res, next) => {
   try {
     const { authorization } = req.headers
-
-    if (!authorization) throw new Error('Capo pone el token')
+    if (!authorization) throw new JsonWebTokenError()
 
     const token = decodeToken(authorization)
-    console.log(token)
     const { _id } = token
 
     req.id = _id
@@ -21,13 +20,12 @@ const securedUser = (req, res, next) => {
 const securedAdmin = (req, res, next) => {
   try {
     const { authorization } = req.headers
-    console.log(authorization)
-    if (!authorization) throw new Error('Capo pone el token')
+    if (!authorization) throw new JsonWebTokenError()
 
     const token = decodeToken(authorization)
-
     const { _id, admin } = token
-    if (!admin) throw new Error('Unauthorizaed')
+
+    if (!admin) throw new Unauthorized()
 
     req.id = _id
     next()

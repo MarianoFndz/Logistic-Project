@@ -1,4 +1,4 @@
-const schema = require('../schema/workPositionSchema')
+const schema = require('../schema/jobTitleSchema')
 
 const validateCreate = (req, res, next) => {
   const { error } = schema.create.validate(req.body)

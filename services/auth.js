@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken')
 const fs = require('fs')
-const { JsonWebTokenError } = require('../customErrors/customErrors')
+const { JsonWebTokenError } = require('../customErrors')
 
 const privateKey = fs.readFileSync('./keys/private.pem')
 const publicKey = fs.readFileSync('./keys/public.pem')
@@ -13,16 +13,15 @@ const decodeToken = (token) => {
     const validToken = checkToken(JWT, publicKey)
     return validToken
   } catch (e) {
-    throw new Error('Invalid token')
+    throw new Error(new JsonWebTokenError())
   }
 }
 
 function checkToken (JWT, publicKey) {
   return jwt.verify(JWT, publicKey, function (err, decoded) {
     if (err) {
-      throw new JsonWebTokenError()
+      throw new Error(err)
     }
-    console.log(decoded)
     return decoded
   })
 }

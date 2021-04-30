@@ -17,9 +17,9 @@ const schemas = {
     lastName: Joi.string()
       .required()
       .messages({ 'any.required': 'The firstname is obligatory' }),
-    workPosition: Joi.string()
+    jobTitle: Joi.string()
       .required()
-      .messages({ 'any.required': 'The work position is obligatory' }),
+      .messages({ 'any.required': 'The jobTitle is obligatory' }),
     ...schemaLoginKeys
   }),
   auth: Joi.object().keys({ ...schemaLoginKeys })

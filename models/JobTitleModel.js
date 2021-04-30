@@ -34,7 +34,11 @@
 
 const { Schema, model } = require('mongoose')
 
-const WorkPositionSchema = Schema({
+const JobTitleSchema = Schema({
+  title: {
+    type: String,
+    required: true
+  },
   description: {
     type: String,
     required: true
@@ -54,4 +58,4 @@ const WorkPositionSchema = Schema({
   }
 })
 
-module.exports = model('workPosition', WorkPositionSchema)
+module.exports = model('jobTitle', JobTitleSchema)

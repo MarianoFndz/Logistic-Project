@@ -9,7 +9,7 @@ const { saveUser } = require('../utils/usersUtil')
 const {
   EmailExistsError,
   EmailNOTExistsError
-} = require('../customErrors/customErrors')
+} = require('../customErrors')
 
 const all = async (req, res) => {
   const allUsers = await User.find()

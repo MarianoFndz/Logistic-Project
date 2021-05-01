@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "NODE_ENV=production node index.js",
-    "test": "NODE_ENV=test jest --verbose --silent",
+    "test": "NODE_ENV=test jest --verbose ",
     "dev": "NODE_ENV=development nodemon node index.js",
     "lint": "standard --fix",
     "prepare": "husky install"

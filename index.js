@@ -36,8 +36,10 @@ app.use((err, req, res, __) => {
 
 const PORT = process.env.PORT || 5000
 
-const server = app.listen(PORT, () => {
-  console.log('server starting on port: ' + PORT)
-})
+if (process.env.NODE_ENV !== 'test') {
+  app.listen(PORT, () => {
+    console.log('server starting on port: ' + PORT)
+  })
+}
 
-module.exports = { app, server }
+module.exports = app

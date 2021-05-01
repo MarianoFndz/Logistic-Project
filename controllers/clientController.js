@@ -1,18 +1,16 @@
-const Client = require('../models/ClientModel')
+const ClientModel = require('../models/ClientModel')
 
 const all = async (req, res) => {
-  const allClients = await Client.find()
+  const allClients = await ClientModel.find()
   res.json(allClients)
 }
 
-const create = ({ body: data }, res) => {
-  const newClient = new Client(data)
+const create = async ({ body: data }, res) => {
+  const newClient = new ClientModel(data)
 
-  Client
-    .create(newClient)
-    .then(() => {
-      res.status(201).json({ message: 'Client created' })
-    })
+  await newClient.save()
+
+  res.status(201).json({ message: 'Client created' })
 }
 
 module.exports = {

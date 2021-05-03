@@ -1,6 +1,6 @@
 const UserModel = require('../models/UserModel')
 const { unhash } = require('./bcrypt')
-const { LoginError } = require('../customErrors/customErrors')
+const { LoginError } = require('../customErrors')
 
 function checkEmail (email) {
   return UserModel.findOne({ email }, { password: 1, admin: 1 })

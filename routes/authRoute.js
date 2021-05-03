@@ -1,7 +1,7 @@
 const { Router } = require('express')
 const router = Router()
 const controller = require('../controllers/authController')
-const validates = require('../middlewares/actions/usersAction')
+const validates = require('../middlewares/validates/actions/usersAction')
 const { securedUser } = require('../middlewares/authMiddleware')
 
 router.post('/', securedUser, validates.create, controller.create)

@@ -2,7 +2,7 @@ const { Router } = require('express')
 const router = Router()
 
 const controllers = require('../../controllers/order/orderControlller')
-const validates = require('../../middlewares/actions/orderAction')
+const validates = require('../../middlewares/validates/actions/orderAction')
 
 const packagingRoute = require('./packagingRoute')
 const distributingRoute = require('./distributingRoute')

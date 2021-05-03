@@ -1,22 +1,9 @@
-const mongoose = require('mongoose')
 
-const { DB_CNN, DB_CNN_TEST, NODE_ENV } = process.env
+const atlasConnection = require('./atlasConnection')
+const inMemoryConnection = require('./inMemoryConnection')
 
-const connectionString = NODE_ENV === 'test' ? DB_CNN_TEST : DB_CNN
+const { NODE_ENV } = process.env
 
-const databaseConnection = async () => {
-  try {
-    console.log(connectionString)
-    await mongoose.connect(connectionString, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-      useFindAndModify: false,
-      useCreateIndex: true
-    })
-    console.log('Connected to Database')
-  } catch (error) {
-    console.error(error)
-  }
-}
+const databaseConnection = NODE_ENV === 'test' ? inMemoryConnection : atlasConnection
 
 module.exports = databaseConnection

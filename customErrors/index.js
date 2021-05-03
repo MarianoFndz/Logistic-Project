@@ -38,11 +38,22 @@ class JsonWebTokenError extends Error {
   }
 }
 
+class UnauthorizedError extends Error {
+  constructor (...params) {
+    super(...params)
+    this.name = 'UnauthorizedError'
+    this.message = 'Unauthorized'
+    this.status = 401
+    this.date = new Date()
+  }
+}
+
 const customErrors = {
   EmailExistsError,
   EmailNOTExistsError,
   LoginError,
-  JsonWebTokenError
+  JsonWebTokenError,
+  UnauthorizedError
 }
 
 module.exports = customErrors

@@ -28,7 +28,6 @@ const sendMail = async ({
       subject,
       html
     })
-    console.log(messageId)
 
     return messageId
   } catch (err) {
